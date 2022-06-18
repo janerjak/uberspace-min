@@ -1,0 +1,30 @@
+uberspaceValues:
+  accounts:
+  - username: "root"
+    password: null
+    price: 1.0
+    host: "acamar" # Currently not required, but should be set for future-proofing
+
+humanization:
+  enableHumanization: true
+  forceAfterDays: 30
+  probabilities: # The probability to set the price is given by (1 - noop) * (1 - onlyLogin)
+    noop: 0.9996527777777778 # 1 - (1 / ((60 * 24 / 5) * 7)) ~ 7 days average with execution every 5 minutes
+    onlyLogin: 0.5 # In total ~ 7 days * (1 / 0.5) = 14 days on average
+    requestAnotherPage: 0.2
+    logout: 0.5
+  delays: # In milliseconds. Value is within [expectedValue - maxDeviation, expectedValue + maxDeviation]
+    betweenAccounts:
+      expected: 60000
+      maxDeviation: 50000
+    betweenPages:
+      expected: 2000
+      maxDeviation: 1000
+    loginCredentials:
+      expected: 6000
+      maxDeviation: 2000
+    setPrice:
+      expected: 6000
+      maxDeviation: 3000
+
+version: null

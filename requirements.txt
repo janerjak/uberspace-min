@@ -1,0 +1,4 @@
+argparse
+PyYAML
+requests
+bs4

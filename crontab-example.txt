@@ -1,0 +1,15 @@
+## Example humanized crontab entry for uberspace-min
+#  Replace /path/to/uberspace_min.py with the path to uberspace_min.py.
+#  Make sure that the config files are readable relative to the execution directory.
+#  This entry is based on default probability and humanization settings in settings/config-example.yaml
+#  You may have to adapt */5 to fit your execution cycle.
+
+*/5 * * * * /bin/python3 /path/to/uberspace_min.py -Ninit -Ni -Nh
+
+## Example crontab entry without noop and only login invocations for uberspace-min
+#  Replace /path/to/uberspace_min.py with the path to uberspace_min.py.
+#  Make sure that the config files are readable relative to the execution directory.
+#  This entry is based on default probability and humanization settings in settings/config-example.yaml
+#  You may have to adapt */5 to fit your execution cycle.
+
+* * 1 * * /bin/python3 /path/to/uberspace_min.py -Ninit -Ni -Nh --force-after-days 0
