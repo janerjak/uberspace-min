@@ -31,6 +31,9 @@ def main():
         if cliTag is not None and getattr(args, f"no_{silenceArg}"):
             SilenceSettings.silenced.append(cliTag)
 
+    # Initialize file paths
+    CONFIG_MANAGER.init_file_paths(args)
+
     # If no config file is present at the expected path, copy the example config
     exampleCopied = CONFIG_MANAGER.copy_config_file_if_none_present()
     config = CONFIG_MANAGER.get_config()

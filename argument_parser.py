@@ -13,6 +13,9 @@ def parse():
     mainParser.add_argument("--password", "-p", metavar="password", type=str, required=False, help="Uberspace account password (plain)")
     mainParser.add_argument("--price", "-P", metavar="price", type=float, required=False, help="price to set your Uberspace account to")
     mainParser.add_argument("--force", "-f", action="store_true", help="force price change now")
+    mainParser.add_argument("--settings-path", "-S", metavar="directory", required=False, default="settings/", help="Path to the directory containing the config file and execution cache")
+    mainParser.add_argument("--config-file", "-Fc", metavar="file", required=False, default="config.yaml", help="Filename of the configuration file to use")
+    mainParser.add_argument("--execution-cache-file", "-Fec", metavar="file", required=False, default="execution-cache.yaml", help="Filename of the execution cache")
 
     ## Modifiers
     # Humanization arguments
