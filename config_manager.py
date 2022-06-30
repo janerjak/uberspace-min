@@ -69,6 +69,6 @@ def copy_config_file_if_none_present() -> bool:
     try:
         copyfile(CONFIG_EXAMPLE_FILE_NAME, CONFIG_FILE_NAME)
     except Exception as ex:
-        log_exception(f"Could not copy example configuration file")
+        log_exception(f"Could not copy example configuration file", ex)
         return None
     return True
