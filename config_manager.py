@@ -4,16 +4,22 @@ from yaml import dump, full_load
 
 from cli_log import log, log_exception, CLITag
 
-CONFIG_FILE_NAME = "settings/config.yaml"
-CONFIG_EXAMPLE_FILE_NAME = "settings/config-example.yaml"
-EXECUTION_CACHE_FILE_NAME = "settings/execution-cache.yaml"
+CONFIG_EXAMPLE_FILE_NAME = "config-example.yaml"
+# Concatenation of --setings-path (settings/) and file names given in --config-file, --execution-cache-file. Are Initialized in init_file_paths()
+PATH_CONFIG_EXAMPLE, PATH_CONFIG, PATH_EXECUTION_CACHE = None, None, None
 
 class LoadedConfigs:
     config = None
     executionCache = None
 
+def init_file_paths(args):
+    global PATH_CONFIG_EXAMPLE, PATH_CONFIG, PATH_EXECUTION_CACHE
+    PATH_CONFIG_EXAMPLE = path.join(args.settings_path, CONFIG_EXAMPLE_FILE_NAME)
+    PATH_CONFIG = path.join(args.settings_path, args.config_file)
+    PATH_EXECUTION_CACHE = path.join(args.settings_path, args.execution_cache_file)
+
 def does_config_file_exist() -> bool:
-    return path.exists(CONFIG_FILE_NAME)
+    return path.exists(PATH_CONFIG)
 
 def parse(file_name : str, parse_error_message : str = None):
     try:
@@ -26,10 +32,10 @@ def parse(file_name : str, parse_error_message : str = None):
         return None
 
 def parse_config():
-    return parse(CONFIG_FILE_NAME)
+    return parse(PATH_CONFIG)
 
 def parse_execution_cache():
-    execCache = parse(EXECUTION_CACHE_FILE_NAME)
+    execCache = parse(PATH_EXECUTION_CACHE)
     if execCache["errors"] is None:
         execCache["errors"] = []
     return execCache
@@ -56,10 +62,10 @@ def write_loaded_config(config_obj, file_name : str) -> bool:
     return True
 
 def write_config():
-    return write_loaded_config(LoadedConfigs.config, CONFIG_FILE_NAME)
+    return write_loaded_config(LoadedConfigs.config, PATH_CONFIG)
 
 def write_execution_cache():
-    return write_loaded_config(LoadedConfigs.executionCache, EXECUTION_CACHE_FILE_NAME)
+    return write_loaded_config(LoadedConfigs.executionCache, PATH_EXECUTION_CACHE)
 
 def copy_config_file_if_none_present() -> bool:
     if does_config_file_exist():
@@ -67,7 +73,7 @@ def copy_config_file_if_none_present() -> bool:
     log(CLITag.WARN, "No configuration file was found")
     log(CLITag.INIT, "Copying example configuration file to expected location")
     try:
-        copyfile(CONFIG_EXAMPLE_FILE_NAME, CONFIG_FILE_NAME)
+        copyfile(PATH_CONFIG_EXAMPLE, PATH_CONFIG)
     except Exception as ex:
         log_exception(f"Could not copy example configuration file", ex)
         return None

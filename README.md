@@ -12,9 +12,10 @@
 1. Copy `settings/config-example.yaml` to `settings/config.yaml` and specify entries for all of your Uberspace accounts.
    (The tool supports multi-accounting natively. However, you could duplicate the codebase for each account as well.)
    - Make sure to comply with the YAML-syntax when creating multiple accounts (start another array entry in `uberspaceValues.accounts` with a leading `-`)
-   - Enable or disable humanization. It is recommended to leave it enabled. To force execution, you can specify the `-f` program argument or set the `humanization.forceAfterDays` setting to `0`. You can view all available arguments and switches by passing `--help` or `-h` as an argument.
+   - Enable or disable humanization. It is recommended to leave it enabled. To force execution, you can specify the `-f` switch or set the `humanization.forceAfterDays` setting to `0`. You can view all available arguments and switches by passing `--help` or `-h` as an argument.
+   - If you want to run this script on a schedule, as it is intended to be used, you may run into the issue that the settings directory is specified relativelyby default. If you use cron, you can change the `HOME` variable in your crontab, but this may affect other jobs. Thus you can also specify the folder yourself (relative to the current working directory or absolute) using `-S <directory>`. If you wish to use multiple configurations for some reason, consider arguments `--config-file <file>` and `--execution-cache-file <file>`.
    - Change probabilities for humanization according to your invocation schedule. How to obtain probabilities is given in the example configuration.
-2. Either run `uberspace_min.py` directly or pass arguments `-u <username> -p <password> -P <price>` at minimum. To quickly check if the utility works you can specify `--no-humanization` and to mute any CLI output that are neither warnings, errors or success statements, specify `-Ninit -Ni -Nh`.
+2. Either run `uberspace_min.py` directly or pass arguments `-u <username> -p <password> -P <price>` at minimum. To quickly check if the script works, you can specify `--no-humanization` and to mute any CLI output that are neither warnings, errors or success statements, specify `-Ninit -Ni -Nh`.
 
 ## Cron
 Example crontab entries are given in `crontab-example.txt`.
